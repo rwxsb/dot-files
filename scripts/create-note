@@ -1,0 +1,14 @@
+#!/bin/bash
+
+zetdir='Repositories/me/zet/'
+myzetdir="$HOME/$zetdir"
+isosec=$(date -u +%Y%m%d%H%M%S)
+
+currentdir=$(pwd)
+cd $myzetdir
+mkdir $isosec
+cd $isosec
+touch README.md
+vi README.md
+wait
+cd $currentdir
