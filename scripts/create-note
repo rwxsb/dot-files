@@ -1,4 +1,5 @@
 #!/bin/bash
+#!/bin/giy
 
 zetdir='Repositories/me/zet/'
 myzetdir="$HOME/$zetdir"
@@ -11,4 +12,7 @@ cd $isosec
 touch README.md
 vi README.md
 wait
+git add *
+git commit -m "($isosec) $(grep "## " README.md)"
+git push origin master
 cd $currentdir
