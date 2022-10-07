@@ -1,0 +1,34 @@
+#!/bin/bash
+
+zetdir='Repositories/me/zet/'
+myzetdir="$HOME/$zetdir"
+isosec=$(date -u +%Y%m%d%H%M%S)
+
+createNote(){
+	currentdir=$(pwd)
+	cd $myzetdir
+	git pull origin master;
+	mkdir $isosec
+	cd $isosec
+	touch README.md
+	vi README.md
+	wait
+	git add *;
+	git commit -m "($isosec) $(grep "## " README.md)";
+	git push origin master;
+	cd $currentdir
+}
+
+while getopts "c:" OPTION
+do
+        case $OPTION in
+                c)
+                createNote 
+                exit 0
+                ;;
+		?)
+		echo "Please specify some arguments, I don't 				know what any of the $@ means"
+		exit -1
+		;;
+        esac
+done
