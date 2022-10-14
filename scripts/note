@@ -27,14 +27,36 @@ createNote(){
 findNote(){
 	currentdir=$(pwd)
 	cd $myzetdir
-	grep -R $OPTARG . | awk '{++cnt} {print cnt") " substr($1,3,14)}'
+	foundisosecs=$(grep -R $OPTARG . | awk '{print substr($1,3,14)}' | uniq)
+	#echo $foundisosecs
+	cnt=0
+	for isosec in $foundisosecs
+	do
+		echo "$cnt) $isosec - $(grep "## " $isosec/README.md)"
+		((cnt=cnt+1));
+	done
+	cd $currentdir
+}
+
+editNote(){
+	currentdir=$(pwd)
+	cd $myzetdir
+	vi $@/README.md
+	wait;
+	git add *;
+	git commit -m "($@) $(grep "## " ./$1/README.md)";
+	git push origin master;
 	cd $currentdir
 }
 
 
-while getopts "f:c" OPTION
+while getopts "e:f:c" OPTION
 do
         case $OPTION in
+		e)
+		editNote $OPTARG
+		exit 0;
+		;;
 		f)
 		findNote $OPTARG
 		exit 0
