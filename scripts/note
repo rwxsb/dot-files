@@ -24,17 +24,42 @@ createNote(){
 	cd $currentdir
 }
 
+promptForExit() {
+    while true; do
+        read -p "$* [y/n]: " yn
+        case $yn in
+            [Yy]*) return 0  ;;
+            [Nn]*) echo "Aborted" ; return  1 ;;
+        esac
+    done
+}
+
 findNote(){
 	currentdir=$(pwd)
 	cd $myzetdir
 	foundisosecs=$(grep -R $OPTARG . | awk '{print substr($1,3,14)}' | uniq)
 	#echo $foundisosecs
 	cnt=0
+	note=-1
 	for isosec in $foundisosecs
 	do
 		echo "$cnt) $isosec - $(grep "## " $isosec/README.md)"
-		((cnt=cnt+1));
+		((cnt=$cnt+1));
 	done
+	status=$(promptForExit "Select note to edit, press 'n' to continue: ")
+	if [[ $status -eq 0 ]]
+	then
+		read note
+	fi
+	#echo $note
+	#echo $cnt
+	if [[ $note -lt $cnt && $note -ge 0 ]]
+	then
+		#echo $note
+		#echo ${foundisosecs[@]}
+		isosecs=($(echo $foundisosecs | tr " " "\n"))
+		editNote "${isosecs[note]}";
+	fi
 	cd $currentdir
 }
 
@@ -43,9 +68,9 @@ editNote(){
 	cd $myzetdir
 	vi $@/README.md
 	wait;
-	git add *;
-	git commit -m "($@) $(grep "## " ./$1/README.md)";
-	git push origin master;
+	#git add *;
+	#git commit -m "($@) $(grep "## " $1/README.md)";
+	#git push origin master;
 	cd $currentdir
 }
 
