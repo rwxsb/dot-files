@@ -18,9 +18,11 @@ createNote(){
 	fi
 	vi README.md
 	wait
-	git add *;
-	git commit -m "($isosec) $(grep "## " README.md)";
-	git push origin master;
+	if [[ `git status --porcelain` ]]; then
+		git add *;
+		git commit -m "($isosec) $(grep "## " README.md)";
+		git push origin master;
+	fi
 	cd $currentdir
 }
 
@@ -38,28 +40,33 @@ findNote(){
 	currentdir=$(pwd)
 	cd $myzetdir
 	foundisosecs=$(grep -R $OPTARG . | awk '{print substr($1,3,14)}' | uniq)
-	#echo $foundisosecs
 	cnt=0
-	note=-1
-	for isosec in $foundisosecs
-	do
-		echo "$cnt) $isosec - $(grep "## " $isosec/README.md)"
-		((cnt=$cnt+1));
-	done
-	status=$(promptForExit "Select note to edit, press 'n' to continue: ")
-	if [[ $status -eq 0 ]]
-	then
+        for isosec in $foundisosecs
+        do
+                echo "$cnt) $isosec - $(grep "## " $isosec/README.md)"
+                ((cnt=$cnt+1));
+        done
+	while true; do
+		echo -n "Select note to edit, press N/n to continue: "
 		read note
-	fi
-	#echo $note
-	#echo $cnt
-	if [[ $note -lt $cnt && $note -ge 0 ]]
-	then
-		#echo $note
-		#echo ${foundisosecs[@]}
-		isosecs=($(echo $foundisosecs | tr " " "\n"))
-		editNote "${isosecs[note]}";
-	fi
+			case $(( ($note >= 0 && note < $cnt)* 1)) in
+				(1)
+					isosecs=($(echo $foundisosecs | tr " " "\n"))
+                    editNote "${isosecs[note]}"
+                    exit 0
+                    ;;
+			esac
+			case $note in
+				[Nn*])
+					exit 0
+					;;
+
+				?)
+					echo "Inserted value is not enumerated option or recognized"
+					exit 1
+					;;
+			esac
+	done
 	cd $currentdir
 }
 
@@ -68,9 +75,11 @@ editNote(){
 	cd $myzetdir
 	vi $@/README.md
 	wait;
-	#git add *;
-	#git commit -m "($@) $(grep "## " $1/README.md)";
-	#git push origin master;
+	if [[ `git status --porcelain` ]]; then
+		git add *;
+		git commit -m "($@) $(grep "## " $1/README.md)";
+		git push origin master;
+	fi
 	cd $currentdir
 }
 
