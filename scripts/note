@@ -24,9 +24,21 @@ createNote(){
 	cd $currentdir
 }
 
-while getopts ":c" OPTION
+findNote(){
+	currentdir=$(pwd)
+	cd $myzetdir
+	grep -R $OPTARG . | awk '{++cnt} {print cnt") " substr($1,3,14)}'
+	cd $currentdir
+}
+
+
+while getopts "f:c" OPTION
 do
         case $OPTION in
+		f)
+		findNote $OPTARG
+		exit 0
+		;;
                 c)
                 createNote $OPTARG
                 exit 0
