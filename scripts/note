@@ -10,7 +10,12 @@ createNote(){
 	git pull origin master;
 	mkdir $isosec
 	cd $isosec
-	touch README.md
+	if [ -f ${@:-""} ];
+		#echo $@
+		then echo "## $@" >> README.md; 
+	else
+		touch README.md
+	fi
 	vi README.md
 	wait
 	git add *;
@@ -19,11 +24,11 @@ createNote(){
 	cd $currentdir
 }
 
-while getopts "c:" OPTION
+while getopts ":c" OPTION
 do
         case $OPTION in
                 c)
-                createNote 
+                createNote $OPTARG
                 exit 0
                 ;;
 		?)
