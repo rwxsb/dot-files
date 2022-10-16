@@ -1,5 +1,6 @@
 #!/bin/bash
 
+merepo='https://github.com/sbecerek/me.git'
 zetdir='Repositories/me/zet/'
 myzetdir="$HOME/$zetdir"
 isosec=$(date -u +%Y%m%d%H%M%S)
@@ -73,6 +74,14 @@ editNote(){
 	cd $currentdir
 }
 
+if [[ ! -d "$myzetdir" ]]; then
+	currentdir=$(pwd)
+	echo "Need to clone your zet/me repository first";
+	cd $HOME/Repositories
+	git clone $merepo
+	wait;
+	cd currentdir
+fi
 
 while getopts "e:f:c" OPTION
 do
