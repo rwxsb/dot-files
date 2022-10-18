@@ -19,6 +19,10 @@ createNote(){
 	fi
 	vi README.md
 	wait
+	if [[ ! -s README.md ]]; then
+		cd ..
+		rm -r $isosec
+	fi
 	if [[ `git status --porcelain` ]]; then
 		git add *;
 		git commit -m "($isosec) $(grep "## " README.md)";
