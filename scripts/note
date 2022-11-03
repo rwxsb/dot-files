@@ -87,7 +87,7 @@ if [[ ! -d "$myzetdir" ]]; then
 	cd currentdir
 fi
 
-while getopts ":c:ef:" OPTION
+while getopts "c:e:f:" OPTION
 do
         case $OPTION in
 		e)
