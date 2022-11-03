@@ -11,9 +11,9 @@ createNote(){
 	git pull origin master;
 	mkdir $isosec
 	cd $isosec
-	if [ -f ${@:-""} ];
-		#echo $@
-		then echo "## $@" >> README.md; 
+	if [[ ! -z $@ ]];
+		then 
+			echo "## $@" >> README.md; 
 	else
 		touch README.md
 	fi
@@ -87,7 +87,7 @@ if [[ ! -d "$myzetdir" ]]; then
 	cd currentdir
 fi
 
-while getopts "e:f:c" OPTION
+while getopts ":c:e:f" OPTION
 do
         case $OPTION in
 		e)
