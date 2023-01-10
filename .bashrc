@@ -174,4 +174,4 @@ function parse_git_dirty {
 	fi
 }
 
-export PS1="\e[33m\]\A\[\e[m\]|\u @ \[\e[36m\]\w\[\e[m\]\[\e[35m\] \`parse_git_branch\`\[\e[m\] "
+export PS1="\[\e[33m\]\A\[\e[m\]|\[\e[32m\]\u\[\e[m\]@\[\e[36m\]\w\[\e[m\]\[\e[35m\]\`parse_git_branch\`\[\e[m\]\\$ "
