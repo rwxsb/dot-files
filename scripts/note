@@ -1,5 +1,6 @@
 #!/bin/bash
 
+ghnodepref='https://github.com/sbecerek/me/tree/master/zet/'
 merepo='https://github.com/sbecerek/me.git'
 zetdir='Repositories/me/zet/'
 myzetdir="$HOME/$zetdir"
@@ -27,6 +28,7 @@ createNote(){
 		git add *;
 		git commit -m "($isosec) $(grep "## " README.md)";
 		git push origin master;
+		echo "Display your note at $ghnodepref/$isosec"
 	fi
 	cd $currentdir
 }
@@ -74,6 +76,7 @@ editNote(){
 		git add *;
 		git commit -m "($@) $(grep "## " $1/README.md)";
 		git push origin master;
+		echo "Display your note at $ghnodepref/$@"
 	fi
 	cd $currentdir
 }
