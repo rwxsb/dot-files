@@ -27,7 +27,7 @@ createNote(){
 	if [[ `git status --porcelain` ]]; then
 		git add *;
 		git commit -m "($isosec) $(grep "## " README.md)";
-		git push origin master;
+		git push origin master > /dev/null 2>&1;
 		echo "Display your note at $ghnodepref/$isosec"
 	fi
 	cd $currentdir
@@ -75,7 +75,7 @@ editNote(){
 	if [[ `git status --porcelain` ]]; then
 		git add *;
 		git commit -m "($@) $(grep "## " $1/README.md)";
-		git push origin master;
+		git push origin master > /dev/null 2>&1 ;
 		echo "Display your note at $ghnodepref/$@"
 	fi
 	cd $currentdir
