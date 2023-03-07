@@ -40,6 +40,7 @@ return {
         custom_only = false,
         list = {
           -- user mappings go here
+          {key = "<C-c>", action="create"}
         },
       },
       float = {
@@ -248,3 +249,4 @@ return {
   } -- END_DEFAULT_OPTS  
   end,
 }
+
