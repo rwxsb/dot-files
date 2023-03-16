@@ -91,14 +91,14 @@ return {
         },
         glyphs = {
           default = "",
-          symlink = "",
+          symlink_arrow = " ➛ ",
           bookmark = "",
           modified = "●",
           folder = {
-            arrow_closed = "+",
-            arrow_open = "-",
+            arrow_closed = "",
+            arrow_open = "",
             default = "",
-            open = "",
+            open = "",
             empty = "",
             empty_open = "",
             symlink = "",
