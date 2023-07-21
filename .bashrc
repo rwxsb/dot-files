@@ -118,7 +118,8 @@ fi
 
 bin=$HOME/bin/
 riderbin=$HOME/JetBrains\ Rider-2022.3.1/bin/
-export PATH=$bin:$riderbin:$PATH
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$bin:$riderbin:$PATH
 
 source ~/.bash_completion/alacritty
 
