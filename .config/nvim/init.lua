@@ -77,6 +77,53 @@ require('lazy').setup({
   --  The configuration is done below. Search for lspconfig to find it below.
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
+    config = function ()
+      util = require "lspconfig/util"
+
+      local capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+      capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+      require("lspconfig").gopls.setup({
+        capabilities = capabilities,
+        flags = { debounce_text_changes = 200 },
+        settings = {
+          gopls = {
+            usePlaceholders = true,
+            gofumpt = true,
+            analyses = {
+              nilness = true,
+              unusedparams = true,
+              unusedwrite = true,
+              useany = true,
+            },
+            codelenses = {
+              gc_details = false,
+              generate = true,
+              regenerate_cgo = true,
+              run_govulncheck = true,
+              test = true,
+              tidy = true,
+              upgrade_dependency = true,
+              vendor = true,
+            },
+            experimentalPostfixCompletions = true,
+            completeUnimported = true,
+            staticcheck = true,
+            directoryFilters = { "-.git", "-node_modules" },
+            semanticTokens = true,
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
+          },
+        },
+      })
+    end,
     dependencies = {
       -- Automatically install LSPs to stdpath for neovim
       'williamboman/mason.nvim',
@@ -90,6 +137,45 @@ require('lazy').setup({
       'folke/neodev.nvim',
     },
   },
+
+  -- you know the drill
+  {
+    "fatih/vim-go",
+    config = function ()
+      -- we disable most of these features because treesitter and nvim-lsp
+      -- take care of it
+      vim.g['go_gopls_enabled'] = 0
+      vim.g['go_code_completion_enabled'] = 0
+      vim.g['go_fmt_autosave'] = 0
+      vim.g['go_imports_autosave'] = 0
+      vim.g['go_mod_fmt_autosave'] = 0
+      vim.g['go_doc_keywordprg_enabled'] = 0
+      vim.g['go_def_mapping_enabled'] = 0
+      vim.g['go_textobj_enabled'] = 0
+      vim.g['go_list_type'] = 'quickfix'
+    end,
+  },
+
+  -- search selection via *
+  { 'bronson/vim-visual-star-search' },
+
+  -- testing framework
+  { 
+    "vim-test/vim-test",
+    config = function ()
+      vim.g['test#strategy'] = 'neovim'
+      vim.g['test#neovim#start_normal'] = '1'
+      vim.g['test#neovim#term_position'] = 'vert'
+    end,
+  },
+
+  {
+    'dinhhuy258/git.nvim',
+    config = function ()
+      require("git").setup()
+    end,
+  },
+
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
