@@ -1,6 +1,31 @@
 env:
   TERM: xterm-256color
+
+
+# Needs patching up the font that you paid 75$ 
+# https://berkeleygraphics.com/
+# https://tech.serhatteker.com/post/2023-04/patch-berkeley-mono-font-with-nerd-fonts/
 font:
   normal:
-    family: Hack Nerd Font Mono
+    family: BerkeleyMono Nerd Font Mono
     style: Regular
+
+  # The bold font face
+  bold:
+    family: BerkeleyMono Nerd Font Mono
+    style: Bold
+
+  # The italic font face
+  italic:
+    family: BerkeleyMono Nerd Font Mono
+    style: Italic
+
+# Bold text is displayed bright 
+draw_bold_text_with_bright_colors: true
+
+# Adds this many blank pixels of padding around the window
+# Units are physical pixels; this is not DPI aware.
+# (change requires restart)
+padding:
+  x: 2
+  y: 2 
