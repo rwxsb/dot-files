@@ -1,3 +1,1 @@
 # dot-files
-sth
-sth
