@@ -9,7 +9,7 @@ M.dap = {
     },
     ["<leader>dr"] = {
       "<cmd> DapContiue <CR>",
-      "Run or continue the debugger"
+      "Continue Debugging"
     },
     ["<leader>dus"] = {
       function  ()
@@ -18,7 +18,7 @@ M.dap = {
         sidebar.open();
       end,
       "Open debugging sidebar"
-    }
+    },
   }
 }
 

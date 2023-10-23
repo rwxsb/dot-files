@@ -33,7 +33,7 @@ local plugins = {
     "folke/noice.nvim",
     event = "VeryLazy",
     init = function ()
-      require "custom.configs.noice" 
+      require "custom.configs.noice"
     end,
     dependencies = {
     -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
@@ -44,6 +44,12 @@ local plugins = {
       "rcarriga/nvim-notify",
     },
     enabled = true,
+  },
+  { 'echasnovski/mini.move',
+    version = '*',
+    init = function ()
+      require('mini.move').setup()
+    end
   },
   --[[ {
     "mfussenegger/nvim-lint",
