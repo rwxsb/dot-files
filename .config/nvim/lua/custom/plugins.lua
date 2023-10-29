@@ -22,6 +22,13 @@ local plugins = {
     },
   },
   {
+    'folke/which-key.nvim',
+    event = "VeryLazy",
+    init = function ()
+      return require "custom.configs.whichkey"
+    end
+  },
+  {
     -- formatting plugin for multiple languages
     "jose-elias-alvarez/null-ls.nvim",
     ft = "go",
